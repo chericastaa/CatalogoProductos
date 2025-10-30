@@ -6,9 +6,8 @@ import { productos as productosIniciales } from './src/data/productos';
 
 export default function App() {
   const [productos, setProductos] = useState<Producto[]>(productosIniciales);
-  const [cart, setCart] = useState<
-    { producto: Producto; cantidad: number }[]
-  >([]);
+  const [user, setUser] = useState<{ email: string; nombre: string } | null>(null);
+  const [cart, setCart] = useState<{ producto: Producto; cantidad: number }[]>([]);
 
   return (
     <NavigationContainer>
@@ -17,6 +16,8 @@ export default function App() {
         setProductos={setProductos}
         cart={cart}
         setCart={setCart}
+        user={user}
+        setUser={setUser}
       />
     </NavigationContainer>
   );

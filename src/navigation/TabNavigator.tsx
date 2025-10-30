@@ -7,6 +7,7 @@ import BusquedaStackNavigator from './BusquedaStackNavigator';
 import AltaProductoScreen from '../screens/AltaProductoScreen';
 import InfoScreen from '../screens/InfoScreen';
 import CartScreen from '../screens/CartScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +16,8 @@ type Props = {
   setProductos: React.Dispatch<React.SetStateAction<Producto[]>>;
   cart: { producto: Producto; cantidad: number }[];
   setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
+  user: { email: string; nombre: string } | null;
+  setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
 };
 
 export default function TabNavigator({
@@ -22,6 +25,8 @@ export default function TabNavigator({
   setProductos,
   cart,
   setCart,
+  user,
+  setUser,
 }: Props) {
   return (
     <Tab.Navigator
@@ -37,8 +42,19 @@ export default function TabNavigator({
           tabBarLabel: 'Inicio',
           tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
         }}
-        component={HomeStackNavigator}
-      />
+      >
+        {(props) => (
+          <HomeStackNavigator
+            {...props}
+            productos={productos}
+            setProductos={setProductos}
+            cart={cart}
+            setCart={setCart}
+            user={user}
+            setUser={setUser}
+          />
+        )}
+      </Tab.Screen>
 
       <Tab.Screen
         name="BusquedaTab"
@@ -61,13 +77,13 @@ export default function TabNavigator({
       </Tab.Screen>
 
       <Tab.Screen
-  name="Carrito"
-  options={{
-    tabBarIcon: ({ color, size }) => <Ionicons name="cart" color={color} size={size} />,
-  }}
->
-  {(props) => <CartScreen {...props} cart={cart} setCart={setCart} />}
-</Tab.Screen>
+        name="Carrito"
+        options={{
+          tabBarIcon: ({ color, size }) => <Ionicons name="cart" color={color} size={size} />,
+        }}
+      >
+        {(props) => <CartScreen {...props} cart={cart} setCart={setCart} user={user} setUser={setUser} />}
+      </Tab.Screen>
 
       <Tab.Screen
         name="InfoTab"
@@ -77,6 +93,15 @@ export default function TabNavigator({
         }}
         component={InfoScreen}
       />
+
+      <Tab.Screen
+        name="LoginTab"
+        options={{
+          tabBarButton: () => null, 
+        }}
+      >
+        {(props) => <LoginScreen {...props} onLogin={setUser} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

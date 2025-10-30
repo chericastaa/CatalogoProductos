@@ -12,16 +12,27 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 type Props = {
   productos: Producto[];
   setProductos: React.Dispatch<React.SetStateAction<Producto[]>>;
+  cart: { producto: Producto; cantidad: number }[];
+setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
 };
 
-export default function StackNavigator({ productos, setProductos }: Props) {
+export default function StackNavigator({ productos, setProductos, cart, setCart }: Props) {
   return (
     <Stack.Navigator initialRouteName="Inicio">
       <Stack.Screen name="Inicio" component={InicioScreen} options={{ title: 'Inicio' }} />
       <Stack.Screen name="Catalogo" options={{ title: 'Catálogo' }}>
         {(props) => <CatalogoScreen {...props} productos={productos} setProductos={setProductos} />}
       </Stack.Screen>
-      <Stack.Screen name="Detalle" component={DetalleScreen} options={{ title: 'Detalle' }} />
+      <Stack.Screen name="Detalle" options={{ title: 'Detalle' }}>
+  {(props) => (
+    <DetalleScreen
+      {...props}
+      route={props.route}
+      cart={cart}
+      setCart={setCart}
+    />
+  )}
+</Stack.Screen>
       <Stack.Screen name="AltaProducto">
         {(props) => <AltaProductoScreen {...props} setProductos={setProductos} />}
       </Stack.Screen>

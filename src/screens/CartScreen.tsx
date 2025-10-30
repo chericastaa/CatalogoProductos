@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Producto } from '../types/Producto';
 
 type CartItem = { producto: Producto; cantidad: number };
@@ -7,9 +8,13 @@ type CartItem = { producto: Producto; cantidad: number };
 type Props = {
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  user: { email: string; nombre: string } | null;
+  setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
 };
 
-export default function CartScreen({ cart, setCart }: Props) {
+export default function CartScreen({ cart, setCart, user, setUser }: Props) {
+  const navigation = useNavigation();
+
   const increaseQty = (id: string) => {
     setCart(prev =>
       prev.map(item =>
@@ -37,6 +42,17 @@ export default function CartScreen({ cart, setCart }: Props) {
   };
 
   const total = cart.reduce((sum, item) => sum + item.producto.precio * item.cantidad, 0);
+
+  if (!user) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.texto}>Por favor, iniciá sesión para ver tu carrito</Text>
+        <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.textoBoton}>Iniciar sesión</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -84,4 +100,7 @@ const styles = StyleSheet.create({
   qty: { marginHorizontal: 10, fontSize: 16 },
   remove: { marginLeft: 'auto' },
   total: { fontSize: 20, fontWeight: 'bold', textAlign: 'right', marginTop: 16 },
+  texto: { fontSize: 18, marginBottom: 20, textAlign: 'center' },
+  boton: { backgroundColor: '#00796b', padding: 14, borderRadius: 8, alignItems: 'center' },
+  textoBoton: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });
