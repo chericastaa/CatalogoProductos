@@ -84,7 +84,7 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
               </View>
             )}
           />
-          <Text style={styles.saludo}>Hola, {user.nombre} 👋</Text>
+          <Text style={styles.total}>Total: ${total}</Text>
         </>
       )}
     </View>
