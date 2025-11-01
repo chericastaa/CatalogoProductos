@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   onLogin: (user: { email: string; nombre: string }) => void;
 };
 
 export default function LoginScreen({ onLogin }: Props) {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
+    console.log('🔥 Botón tocado');
     if (!email.includes('@')) {
       Alert.alert('Email inválido');
       return;
@@ -18,9 +21,13 @@ export default function LoginScreen({ onLogin }: Props) {
       Alert.alert('Contraseña muy corta');
       return;
     }
-
+ 
+    console.log('✅ Enviando usuario...');
     onLogin({ email, nombre: email.split('@')[0] });
-    Alert.alert('¡Bienvenido!', `Hola, ${email.split('@')[0]}`);
+    console.log('✅ Usuario enviado, cerrando pantalla...');
+    Alert.alert('¡Bienvenido!', `Hola, ${email.split('@')[0]}`, [
+      { text: 'OK', onPress: () => navigation.goBack() }
+    ]);
   };
 
   return (
@@ -46,7 +53,7 @@ export default function LoginScreen({ onLogin }: Props) {
 
       <TouchableOpacity style={styles.boton} onPress={handleLogin}>
         <Text style={styles.textoBoton}>Ingresar</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
     </View>
   );
 }

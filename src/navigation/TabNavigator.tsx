@@ -94,10 +94,10 @@ export default function TabNavigator({
         component={InfoScreen}
       />
 
-      <Tab.Screen
-        name="LoginTab"
+      <Tab.Screen 
+      name="LoginTab"
         options={{
-          tabBarButton: () => null, 
+          tabBarStyle: { display: 'none' }, 
         }}
       >
         {(props) => <LoginScreen {...props} onLogin={setUser} />}

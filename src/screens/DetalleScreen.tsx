@@ -16,6 +16,11 @@ export default function DetalleScreen({ route, cart, setCart }: Props) {
   const { producto } = route.params;
 
   const agregarAlCarrito = () => {
+    if (!cart) {
+      Alert.alert('Error', 'El carrito no está listo');
+      return;
+    }
+
     const existente = cart.find(item => item.producto.id === producto.id);
     if (existente) {
       setCart(prev =>

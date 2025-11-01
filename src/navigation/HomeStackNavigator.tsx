@@ -5,8 +5,9 @@ import DetalleScreen from '../screens/DetalleScreen';
 import LoginScreen from '../screens/LoginScreen';
 import { RootStackParamList } from '../types/navigation';
 import { Producto } from '../types/Producto';
+import { StackParamList } from '../types/StackParamList';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 type Props = {
   productos: Producto[];

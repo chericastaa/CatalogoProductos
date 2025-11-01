@@ -1,6 +1,5 @@
-export type RootStackParamList = {
+export type StackParamList = {
   Inicio: undefined;
-  Catalogo: undefined;
   Detalle: {
     producto: {
       id: string;
@@ -10,6 +9,5 @@ export type RootStackParamList = {
       imagen: string;
     };
   };
-  AltaProducto: undefined;
   Login: undefined;
 };

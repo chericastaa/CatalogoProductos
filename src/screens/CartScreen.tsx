@@ -6,14 +6,16 @@ import { Producto } from '../types/Producto';
 type CartItem = { producto: Producto; cantidad: number };
 
 type Props = {
-  cart: CartItem[];
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  cart: { producto: Producto; cantidad: number }[];
+  setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
   user: { email: string; nombre: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
 };
 
 export default function CartScreen({ cart, setCart, user, setUser }: Props) {
   const navigation = useNavigation();
+
+  if (!cart) return null;
 
   const increaseQty = (id: string) => {
     setCart(prev =>
@@ -47,7 +49,7 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
     return (
       <View style={styles.container}>
         <Text style={styles.texto}>Por favor, iniciá sesión para ver tu carrito</Text>
-        <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity style={styles.boton} onPress={() => navigation.getParent()?.navigate('LoginTab')}>
           <Text style={styles.textoBoton}>Iniciar sesión</Text>
         </TouchableOpacity>
       </View>
@@ -82,7 +84,7 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
               </View>
             )}
           />
-          <Text style={styles.total}>Total: ${total}</Text>
+          <Text style={styles.saludo}>Hola, {user.nombre} 👋</Text>
         </>
       )}
     </View>
