@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Producto } from '../types/Producto';
 
 type CartItem = { producto: Producto; cantidad: number };
 
 type Props = {
-  cart: { producto: Producto; cantidad: number }[];
-  setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
   user: { email: string; nombre: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
 };
@@ -15,7 +15,16 @@ type Props = {
 export default function CartScreen({ cart, setCart, user, setUser }: Props) {
   const navigation = useNavigation();
 
-  if (!cart) return null;
+  if (!user) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.texto}>Por favor, iniciá sesión para ver tu carrito</Text>
+        <TouchableOpacity style={styles.boton} onPress={() => navigation.getParent()?.navigate('LoginTab')}>
+          <Text style={styles.textoBoton}>Iniciar sesión</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   const increaseQty = (id: string) => {
     setCart(prev =>
@@ -45,19 +54,11 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
 
   const total = cart.reduce((sum, item) => sum + item.producto.precio * item.cantidad, 0);
 
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.texto}>Por favor, iniciá sesión para ver tu carrito</Text>
-        <TouchableOpacity style={styles.boton} onPress={() => navigation.getParent()?.navigate('LoginTab')}>
-          <Text style={styles.textoBoton}>Iniciar sesión</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
+      {/* Saludo al usuario */}
+      <Text style={styles.saludo}>Hola, {user.nombre} 👋</Text>
+
       {cart.length === 0 ? (
         <Text style={styles.empty}>Tu carrito está vacío</Text>
       ) : (
@@ -105,4 +106,5 @@ const styles = StyleSheet.create({
   texto: { fontSize: 18, marginBottom: 20, textAlign: 'center' },
   boton: { backgroundColor: '#00796b', padding: 14, borderRadius: 8, alignItems: 'center' },
   textoBoton: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  saludo: { fontSize: 18, marginBottom: 12, textAlign: 'center', fontWeight: '600' },
 });
