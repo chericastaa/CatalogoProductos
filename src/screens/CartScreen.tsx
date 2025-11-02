@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { Producto } from '../types/Producto';
 
 type CartItem = { producto: Producto; cantidad: number };
+
+type TabNavigationProp = BottomTabNavigationProp<any, 'Carrito'>;
 
 type Props = {
   cart: CartItem[];
@@ -13,13 +16,18 @@ type Props = {
 };
 
 export default function CartScreen({ cart, setCart, user, setUser }: Props) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<TabNavigationProp>();
 
   if (!user) {
     return (
       <View style={styles.container}>
         <Text style={styles.texto}>Por favor, iniciá sesión para ver tu carrito</Text>
-        <TouchableOpacity style={styles.boton} onPress={() => navigation.getParent()?.navigate('LoginTab')}>
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={() => {
+            navigation.jumpTo('Login');
+          }}
+        >
           <Text style={styles.textoBoton}>Iniciar sesión</Text>
         </TouchableOpacity>
       </View>
@@ -86,6 +94,15 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
             )}
           />
           <Text style={styles.total}>Total: ${total}</Text>
+          <TouchableOpacity
+            style={styles.botonFinalizar}
+            onPress={() => {
+              // Cambiamos al tab InicioTab y pedimos abrir FinalizarCompra en su stack
+              (navigation as any).navigate('InicioTab', { screen: 'FinalizarCompra' });
+            }}
+          >
+            <Text style={styles.textoFinalizar}>Finalizar compra</Text>
+          </TouchableOpacity>
         </>
       )}
     </View>
@@ -93,7 +110,13 @@ export default function CartScreen({ cart, setCart, user, setUser }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  container: {
+    padding: 16, backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    height: '100%',
+    paddingTop: 40,
+  },
   empty: { textAlign: 'center', marginTop: 50, fontSize: 18 },
   item: { marginBottom: 16, padding: 12, backgroundColor: '#f6f8fa', borderRadius: 8 },
   nombre: { fontSize: 16, fontWeight: '600' },
@@ -102,9 +125,19 @@ const styles = StyleSheet.create({
   btn: { fontSize: 20, paddingHorizontal: 10 },
   qty: { marginHorizontal: 10, fontSize: 16 },
   remove: { marginLeft: 'auto' },
-  total: { fontSize: 20, fontWeight: 'bold', textAlign: 'right', marginTop: 16 },
+  total: {
+    fontSize: 20, fontWeight: 'bold', textAlign: 'right', marginTop: 'auto',
+  },
   texto: { fontSize: 18, marginBottom: 20, textAlign: 'center' },
   boton: { backgroundColor: '#00796b', padding: 14, borderRadius: 8, alignItems: 'center' },
   textoBoton: { color: '#fff', fontSize: 16, fontWeight: '600' },
   saludo: { fontSize: 18, marginBottom: 12, textAlign: 'center', fontWeight: '600' },
+  botonFinalizar: {
+    backgroundColor: '#00796b',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  textoFinalizar: { color: '#fff', fontSize: 18, fontWeight: '600' },
 });

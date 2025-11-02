@@ -18,6 +18,7 @@ type Props = {
   setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
   user: { email: string; nombre: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
+  onFinalizar: () => void;
 };
 
 export default function TabNavigator({
@@ -27,6 +28,7 @@ export default function TabNavigator({
   setCart,
   user,
   setUser,
+  onFinalizar,
 }: Props) {
   return (
     <Tab.Navigator
@@ -52,6 +54,7 @@ export default function TabNavigator({
             setCart={setCart}
             user={user}
             setUser={setUser}
+            onFinalizar={onFinalizar}
           />
         )}
       </Tab.Screen>
@@ -63,7 +66,7 @@ export default function TabNavigator({
           tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
         }}
       >
-        {(props) => <BusquedaStackNavigator {...props} productos={productos} />}
+        {(props) => <BusquedaStackNavigator {...props} productos={productos} cart={cart} setCart={setCart} user={user} setUser={setUser} />}
       </Tab.Screen>
 
       <Tab.Screen
@@ -94,10 +97,12 @@ export default function TabNavigator({
         component={InfoScreen}
       />
 
-      <Tab.Screen 
-      name="LoginTab"
+      <Tab.Screen
+        name="Login"
         options={{
-          tabBarStyle: { display: 'none' }, 
+          tabBarLabel: 'Login',
+          tabBarIcon: ({ color, size }) => (<Ionicons name="person-circle-outline" color={color} size={size} />
+          ),
         }}
       >
         {(props) => <LoginScreen {...props} onLogin={setUser} />}

@@ -1,3 +1,5 @@
+import { Producto } from "./Producto";
+
 export type RootStackParamList = {
   Inicio: undefined;
   Catalogo: undefined;
@@ -12,4 +14,9 @@ export type RootStackParamList = {
   };
   AltaProducto: undefined;
   Login: undefined; 
+  FinalizarCompra: {
+    cart: { producto: Producto; cantidad: number }[];
+    user: { email: string; nombre: string } | null;
+    onFinalizar: () => void;
+  };  
 };

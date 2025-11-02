@@ -3,32 +3,12 @@ import { View, Text, Image, ScrollView, StyleSheet, Dimensions, TouchableOpacity
 import { Producto } from '../types/Producto';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
+import { productos } from '../data/productos';
+import { carouselImages } from '../data/carouselImages';
 
-const destacados: Producto[] = [
-  {
-    id: '1',
-    nombre: 'Auriculares Bluetooth',
-    precio: 15000,
-    descripcion: 'Con noise cancelling',
-    imagen: 'https://picsum.photos/200/200?random=1',
-  },
-  {
-    id: '2',
-    nombre: 'Teclado Mecánico',
-    precio: 25000,
-    descripcion: 'RGB con switches rojos',
-    imagen: 'https://picsum.photos/200/200?random=2',
-  },
-  {
-    id: '3',
-    nombre: 'Mouse Gamer',
-    precio: 8000,
-    descripcion: 'RGB y 12000 DPI',
-    imagen: 'https://picsum.photos/200/200?random=3',
-  },
-];
+const images = productos.map(p => p.imagen);
 
-const images = destacados.map(p => p.imagen);
+const destacados = productos.slice(2, 5);
 
 const { width } = Dimensions.get('window');
 
@@ -58,14 +38,14 @@ export default function InicioScreen({ navigation }: Props) {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
         >
-          {destacados.map((p) => (
-            <Image key={p.id} source={{ uri: p.imagen }} style={styles.carouselImage} />
+          {carouselImages.map((p) => (
+            <Image key={p.id} source={{ uri: p.url }} style={styles.carouselImage} />
           ))}
         </ScrollView>
 
         {/* Indicadores de puntos */}
         <View style={styles.dotsContainer}>
-          {destacados.map((_, i) => (
+          {carouselImages.map((_, i) => (
             <View
               key={i}
               style={[styles.dot, i === currentIndex && styles.activeDot]}

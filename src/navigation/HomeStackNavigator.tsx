@@ -6,6 +6,7 @@ import LoginScreen from '../screens/LoginScreen';
 import { RootStackParamList } from '../types/navigation';
 import { Producto } from '../types/Producto';
 import { StackParamList } from '../types/StackParamList';
+import FinalizarCompraScreen from '../screens/FinalizarCompraScreen';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -16,6 +17,7 @@ type Props = {
   setCart: React.Dispatch<React.SetStateAction<{ producto: Producto; cantidad: number }[]>>;
   user: { email: string; nombre: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ email: string; nombre: string } | null>>;
+  onFinalizar: () => void;
 };
 
 export default function HomeStackNavigator({
@@ -25,6 +27,7 @@ export default function HomeStackNavigator({
   setCart,
   user,
   setUser,
+  onFinalizar,
 }: Props) {
   return (
     <Stack.Navigator>
@@ -43,6 +46,9 @@ export default function HomeStackNavigator({
 
       <Stack.Screen name="Login" options={{ title: 'Iniciar sesión' }}>
         {(props) => <LoginScreen {...props} onLogin={setUser} />}
+      </Stack.Screen>
+      <Stack.Screen name="FinalizarCompra">
+        {(props) => <FinalizarCompraScreen {...props} cart={cart} user={user} onFinalizar={onFinalizar} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

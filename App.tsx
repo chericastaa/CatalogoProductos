@@ -18,6 +18,7 @@ export default function App() {
         setCart={setCart}
         user={user}
         setUser={setUser}
+        onFinalizar={() => setCart([])}
       />
     </NavigationContainer>
   );

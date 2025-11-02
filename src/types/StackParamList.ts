@@ -1,3 +1,5 @@
+import { Producto } from "./Producto";
+
 export type StackParamList = {
   Inicio: undefined;
   Detalle: {
@@ -10,4 +12,9 @@ export type StackParamList = {
     };
   };
   Login: undefined;
+  FinalizarCompra: {
+    cart: { producto: Producto; cantidad: number }[];
+    user: { email: string; nombre: string } | null;
+    onFinalizar: () => void;
+  };
 };
