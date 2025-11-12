@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InicioScreen from '../screens/InicioScreen';
 import DetalleScreen from '../screens/DetalleScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { RootStackParamList } from '../types/navigation';
+import { HomeStackParamList } from '../types/navigation';
 import { Producto } from '../types/Producto';
-import { StackParamList } from '../types/StackParamList';
 import FinalizarCompraScreen from '../screens/FinalizarCompraScreen';
+import CatalogoScreen from '../screens/CatalogoScreen';
 
-const Stack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 type Props = {
   productos: Producto[];
@@ -30,8 +30,12 @@ export default function HomeStackNavigator({
   onFinalizar,
 }: Props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator id={undefined}>
       <Stack.Screen name="Inicio" component={InicioScreen} options={{ title: 'Inicio' }} />
+
+      <Stack.Screen name="Catalogo" options={{ title: 'Catálogo' }}>
+        {(props) => <CatalogoScreen {...props} productos={productos} setProductos={setProductos} />}
+      </Stack.Screen>
 
       <Stack.Screen name="Detalle" options={{ title: 'Detalle' }}>
         {(props) => (

@@ -2,14 +2,10 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BusquedaScreen from '../screens/BusquedaScreen';
 import DetalleScreen from '../screens/DetalleScreen';
+import { BusquedaStackParamList } from '../types/navigation';
 import { Producto } from '../types/Producto';
 
-type RootStackParamList = {
-  Busqueda: undefined;
-  Detalle: { producto: Producto };
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<BusquedaStackParamList>();
 
 type Props = {
   productos: Producto[];
@@ -21,7 +17,7 @@ type Props = {
 
 export default function BusquedaStackNavigator({ productos, cart, setCart, user, setUser }: Props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator id={undefined}>
       <Stack.Screen name="Busqueda">
         {(props) => <BusquedaScreen {...props} productos={productos} cart={cart} setCart={setCart} />}
       </Stack.Screen>
@@ -29,5 +25,5 @@ export default function BusquedaStackNavigator({ productos, cart, setCart, user,
         {(props) => <DetalleScreen {...props} cart={cart} setCart={setCart} />}
       </Stack.Screen>
     </Stack.Navigator>
-  );  
+  );
 }

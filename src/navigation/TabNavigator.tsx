@@ -31,7 +31,7 @@ export default function TabNavigator({
   onFinalizar,
 }: Props) {
   return (
-    <Tab.Navigator
+    <Tab.Navigator id={undefined}
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#00796b',
