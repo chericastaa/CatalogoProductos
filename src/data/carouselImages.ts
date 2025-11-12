@@ -1,7 +1,3 @@
-/**
- * Lista de imágenes para el carousel
- */
-
 export const carouselImages = [
     {
         id: 'carousel-1',

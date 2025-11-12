@@ -5,14 +5,14 @@ export const productos: Producto[] = [
     id: '1',
     nombre: 'Auriculares Inalámbricos Xiaomi Redmi Buds 6 Play Negro',
     precio: 20999,
-    descripcion: 'Los Xiaomi Redmi Buds 6 Play negros ofrecen sonido claro y conexión Bluetooth 5.4 estable. Tienen hasta 7,5 horas de batería por carga y 36 horas con el estuche. Su diseño liviano y cómodo es ideal para usar todo el día, incluso al entrenar. Además, son resistentes al agua (IPX4) y se emparejan rápido con tu teléfono.',
+    descripcion: 'Los Xiaomi Redmi Buds 6 Play negros ofrecen sonido claro y conexión Bluetooth 5.4 estable. Tienen hasta 7,5 horas de batería por carga y 36 horas con el estuche. Su diseño liviano y cómodo es ideal para usar todo el día, incluso al entrenar.',
     imagen: 'https://http2.mlstatic.com/D_NQ_NP_2X_802305-MLA95679505222_102025-F.webp',
   },
   {
     id: '2',
     nombre: 'Teclado Mecánico Rkr65 65% Rgb Volume Control Pc Gamer',
     precio: 66929,
-    descripcion: 'El teclado mecánico RKR 65 65% RGB combina diseño compacto y rendimiento gamer. Tiene iluminación RGB, perilla de volumen y switches intercambiables. Ideal para quienes buscan potencia y estilo en poco espacio.',
+    descripcion: 'El teclado mecánico RKR 65 65% RGB combina diseño compacto y rendimiento gamer. Tiene iluminación RGB, perilla de volumen y switches intercambiables. Ideal para quienes buscan potencia y estilo en poco espacio.',
     imagen: 'https://http2.mlstatic.com/D_NQ_NP_2X_850569-MLA97839165243_112025-F.webp',
   },
   {
