@@ -20,3 +20,22 @@ export type RootStackParamList = {
     onFinalizar: () => void;
   };
 };
+export type HomeStackParamList = {
+  Inicio: undefined;
+  Catalogo: undefined;
+  Detalle: {
+    producto: Producto;
+  };
+  Login: undefined;
+  FinalizarCompra: {
+    cart: { producto: Producto; cantidad: number }[];
+    user: { email: string; nombre: string } | null;
+    onFinalizar: () => void;
+  };
+};
+export type BusquedaStackParamList = {
+  Busqueda: undefined;
+  Detalle: {
+    producto: Producto;
+  };
+};
